@@ -1,0 +1,8 @@
+---
+import { text, type Lang } from '../i18n/utils';
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const t = text(Astro.props.lang);
+---
+<section id="how-it-works" class="section container"><p class="eyebrow">{t.howKicker}</p><h2>{t.howTitle}</h2><ol class="steps three-grid">{t.steps.map((step, i) => <li><div class="step-top"><span dir="ltr">0{i+1}</span>{i<2 && <Icon name="arrow"/>}</div><h3>{step}</h3><p>{t.stepDescriptions[i]}</p></li>)}</ol><p class="night-note"><Icon name="hanger"/><bdi>{t.nightPickupNote}</bdi></p>{site.delivery && <div><h3>{t.deliveryTitle}</h3><p>{t.deliveryText}</p></div>}</section>

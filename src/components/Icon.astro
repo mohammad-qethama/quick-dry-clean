@@ -1,0 +1,18 @@
+---
+interface Props { name?: string; class?: string }
+const { name = 'hanger', class: className = '' } = Astro.props;
+const paths: Record<string, string> = {
+  hanger: 'M9 7a3 3 0 1 1 5 2c-1 1-2 1-2 3l9 6a1 1 0 0 1-.6 2H3.6a1 1 0 0 1-.6-2l9-6',
+  phone: 'M7 3H4a1 1 0 0 0-1 1c0 9 8 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a15 15 0 0 1-7-7l2-2-2-5Z',
+  whatsapp: 'M20 11.5a8.5 8.5 0 0 1-12.5 7.5L3 21l1.8-5A8.5 8.5 0 1 1 20 11.5ZM8 7c0 5 4 9 8 9l1-3-3-1-1 1-2-2 1-1-1-3H8Z',
+  wash: 'M4 3h16v18H4V3Zm0 5h16M7 5.5h.1M10 5.5h.1M16 14a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z',
+  iron: 'M3 16c1-5 4-8 9-8h6l3 10H3v-2Zm6-8V5h8v3M3 14h17',
+  arrow: 'M4 12h16m-6-6 6 6-6 6',
+  pin: 'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Zm-5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
+  facebook: 'M14 21v-8h3l1-4h-4V7c0-1 1-2 2-2h2V2h-3c-3 0-5 2-5 5v2H7v4h3v8',
+  instagram: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm9 9a4 4 0 1 1-8 0 4 4 0 0 1 8 0Zm1-5h.01',
+  menu: 'M4 6h16M4 12h16M4 18h16',
+  check: 'm5 12 4 4L19 6',
+};
+---
+<svg class:list={['icon', className, { directional: name === 'arrow' }]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name] ?? paths.hanger}/></svg>

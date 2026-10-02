@@ -1,0 +1,8 @@
+---
+import { text, home, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = text(lang);
+const other = lang === 'ar' ? 'en' : 'ar';
+---
+<a class="language" href={home(other)} lang={other} hreflang={other} aria-label={`${t.language} — ${t.languageLabel}`}><bdi>{t.language}</bdi></a>

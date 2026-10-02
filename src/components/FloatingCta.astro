@@ -1,0 +1,8 @@
+---
+import { text, whatsappUrl, type Lang } from '../i18n/utils';
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props; const t = text(lang);
+---
+<a class="floating-cta fixed end-4 bottom-4" href={whatsappUrl(lang)} aria-label={t.whatsapp}><Icon name="whatsapp"/></a><div class="mobile-contact"><a href={`tel:${site.phoneIntl}`}><Icon name="phone"/>{t.call}</a><a href={whatsappUrl(lang)}><Icon name="whatsapp"/>{t.whatsapp}</a></div>

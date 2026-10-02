@@ -1,0 +1,10 @@
+---
+import { text, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const t = text(Astro.props.lang);
+---
+<div class="hours-badge"><svg class="sun-moon" viewBox="0 0 64 64" aria-hidden="true">
+  <circle cx="32" cy="32" r="32" fill="var(--charcoal)"/>
+  <g class="sun" stroke="var(--terracotta)" stroke-width="2.5"><circle cx="32" cy="32" r="10" fill="var(--terracotta)"/><path d="M32 12v5m0 30v5M12 32h5m30 0h5M18 18l4 4m20 20 4 4M18 46l4-4m20-20 4-4"/></g>
+  <path class="moon" d="M41 42a17 17 0 0 1-18-27 18 18 0 1 0 23 23Z" fill="var(--cream)"/>
+</svg><div><strong dir="ltr">24/7</strong><span>{t.hours}</span></div></div>

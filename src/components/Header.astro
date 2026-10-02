@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+import LangSwitcher from './LangSwitcher.astro';
+import { text, home, whatsappUrl, type Lang } from '../i18n/utils';
+interface Props { lang: Lang }
+const { lang } = Astro.props; const t = text(lang);
+const links = ['services', 'prices', 'how-it-works', 'contact'];
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={home(lang)}><span class="brand-mark"><Icon/></span><span>{t.name}</span></a>
+    <nav class="desktop-nav" aria-label={t.menu}>{links.map((id, i) => <a href={`${home(lang)}#${id}`}>{t.navigation[i]}</a>)}</nav>
+    <div class="header-actions"><LangSwitcher lang={lang}/><a class="button header-cta" href={whatsappUrl(lang)}><Icon name="whatsapp"/>{t.whatsapp}</a>
+    <button class="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label={t.menu} data-open-label={t.menu} data-close-label={t.closeMenu}><Icon name="menu"/></button></div>
+  </div>
+  <nav id="mobile-menu" class="mobile-menu container" aria-label={t.menu} hidden>{links.map((id, i) => <a href={`${home(lang)}#${id}`}>{t.navigation[i]}</a>)}<LangSwitcher lang={lang}/><a class="button" href={whatsappUrl(lang)}>{t.whatsapp}</a></nav>
+</header>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+  function setMenu(open: boolean) {
+    if (!button || !menu) return;
+    menu.hidden = !open; button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', (open ? button.dataset.closeLabel : button.dataset.openLabel) || '');
+  }
+  button?.addEventListener('click', () => setMenu(button.getAttribute('aria-expanded') !== 'true'));
+  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && button?.getAttribute('aria-expanded') === 'true') { setMenu(false); button.focus(); } });
+  matchMedia('(min-width: 1100px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
+</script>

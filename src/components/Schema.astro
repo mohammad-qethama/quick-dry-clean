@@ -1,0 +1,17 @@
+---
+import { text, home, type Lang } from '../i18n/utils';
+import { site } from '../config/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props; const t = text(lang);
+const schema = {
+  '@context': 'https://schema.org', '@type': 'DryCleaningOrLaundry',
+  '@id': `${site.siteUrl}/#business`, name: t.name, alternateName: text(lang === 'ar' ? 'en' : 'ar').name,
+  address: { '@type': 'PostalAddress', streetAddress: t.address, addressLocality: t.city, addressCountry: 'JO' },
+  telephone: site.phoneIntl, url: new URL(home(lang), site.siteUrl).href,
+  sameAs: [site.facebook, site.instagram].filter(Boolean),
+  openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '00:00', closes: '23:59' },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  priceRange: site.placeholders.priceRange, areaServed: t.city, inLanguage: ['ar','en'],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}/>

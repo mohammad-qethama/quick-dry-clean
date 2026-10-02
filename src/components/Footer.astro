@@ -1,0 +1,8 @@
+---
+import { text, home, type Lang } from '../i18n/utils';
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props; const t = text(lang);
+---
+<footer class="site-footer"><div class="container"><div class="footer-top"><a class="brand" href={home(lang)}><Icon/><span>{t.name}</span></a><p>{t.footerNote}</p><div class="socials">{site.facebook && <a href={site.facebook} aria-label={t.facebook}><Icon name="facebook"/></a>}{site.instagram && <a href={site.instagram} aria-label={t.instagram}><Icon name="instagram"/></a>}</div></div><p class="copyright">© <bdi>{new Date().getFullYear()}</bdi> {t.name}. {t.copyright}</p></div></footer>

@@ -1,0 +1,24 @@
+---
+import { text, type Lang } from '../i18n/utils';
+import { site } from '../config/site';
+interface Props { lang: Lang }
+const t = text(Astro.props.lang);
+---
+<section id="quality" class="quality-section"><div class="container split-layout"><div><p class="eyebrow">{t.qualityKicker}</p><h2>{t.qualityTitle}</h2><p class="lead">{t.qualityPromise}</p><p class="muted">{t.sliderHelp}</p><p class="caption"><bdi>{t.sampleImages}</bdi></p></div>
+<div class="comparison" style="--split:50%">
+  <div class="comparison-images"><img class="before-image" src={site.placeholders.images.before} alt={t.beforeAlt} width="800" height="700" loading="lazy"/>
+  <div class="after-reveal"><img src={site.placeholders.images.after} alt={t.afterAlt} width="800" height="700" loading="lazy"/></div>
+  <span class="compare-label before-label">{t.before}</span><span class="compare-label after-label">{t.after}</span>
+  <div class="compare-line" aria-hidden="true"><span>↔</span></div>
+  <label class="sr-only" for="comparison-range">{t.sliderLabel}</label>
+  <input id="comparison-range" type="range" min="0" max="100" value="50" step="1" aria-valuetext={`${t.before} 50%`} data-before={t.before}/>
+  </div>
+</div></div></section>
+<script>
+  document.querySelectorAll<HTMLInputElement>('.comparison input').forEach(input => {
+    input.addEventListener('input', () => {
+      input.closest<HTMLElement>('.comparison')?.style.setProperty('--split', `${input.value}%`);
+      input.setAttribute('aria-valuetext', `${input.dataset.before} ${input.value}%`);
+    });
+  });
+</script>

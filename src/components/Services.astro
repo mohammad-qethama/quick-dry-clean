@@ -1,0 +1,8 @@
+---
+import { text, type Lang } from '../i18n/utils';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const t = text(Astro.props.lang);
+---
+<section id="services" class="section container"><div class="section-heading"><div><p class="eyebrow">{t.servicesKicker}</p><h2>{t.servicesTitle}</h2></div><Icon class="divider-hanger"/></div>
+<div class="three-grid">{t.services.map((service, i) => <article class="service-card"><span class="service-icon"><Icon name={['hanger','wash','iron'][i]}/></span><span class="card-number" dir="ltr">0{i+1}</span><h3>{service}</h3><p><bdi>{t.serviceDescriptions[i]}</bdi></p></article>)}</div></section>

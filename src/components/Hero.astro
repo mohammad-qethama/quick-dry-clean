@@ -1,0 +1,15 @@
+---
+import { text, whatsappUrl, type Lang } from '../i18n/utils';
+import { site } from '../config/site';
+import SunMoonBadge from './SunMoonBadge.astro';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props; const t = text(lang);
+---
+<section class="hero container" aria-labelledby="hero-title">
+  <div class="hero-copy"><p class="eyebrow"><span></span>{t.heroKicker}</p><h1 id="hero-title">{t.tagline}</h1>
+  <p class="hero-description">{t.heroDescription} <bdi>{t.city}</bdi>.</p>
+  <div class="button-row"><a class="button" href={whatsappUrl(lang)}><Icon name="whatsapp"/>{t.whatsapp}</a><a class="button outline" href={`tel:${site.phoneIntl}`}><Icon name="phone"/>{t.call}</a></div>
+  <SunMoonBadge lang={lang}/></div>
+  <div class="hero-visual" aria-hidden="true"><div class="hero-visual-top"><Icon/><span>{t.shortHours}</span></div><span class="hero-number" dir="ltr">24<span>/</span>7</span><div class="hero-visual-bottom"><span>{t.footerNote}</span><Icon name="arrow"/></div></div>
+</section>

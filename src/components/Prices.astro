@@ -1,0 +1,8 @@
+---
+import { text, type Lang } from '../i18n/utils';
+import { prices } from '../config/prices';
+interface Props { lang: Lang }
+const { lang } = Astro.props; const t = text(lang);
+const categories = [...new Set(prices.map(row => row.category[lang]))];
+---
+<section id="prices" class="prices-section section"><div class="container"><p class="eyebrow">{t.pricesKicker}</p><h2>{t.pricesTitle}</h2><p id="price-disclaimer" class="placeholder-note"><bdi>{t.placeholderPrices}</bdi></p><div class="table-scroll" tabindex="0" role="region" aria-label={t.pricesTitle}><table aria-describedby="price-disclaimer"><thead><tr>{t.priceColumns.map(label => <th scope="col">{label}</th>)}</tr></thead>{categories.map(category => <tbody>{prices.filter(row => row.category[lang] === category).map((row, i, group) => <tr>{i === 0 && <th scope="rowgroup" rowspan={group.length}>{category}</th>}<td>{row.item[lang]}</td><td><bdi>{row.price.toFixed(2)}</bdi> {t.currency}</td></tr>)}</tbody>)}</table></div><p class="muted price-note">{t.priceNote}</p></div></section>

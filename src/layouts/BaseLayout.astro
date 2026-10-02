@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import { site } from '../config/site';
+import { text, home, type Lang } from '../i18n/utils';
+import cairoBold from '@fontsource/cairo/files/cairo-arabic-700-normal.woff2?url';
+import cairoRegular from '@fontsource/cairo/files/cairo-arabic-400-normal.woff2?url';
+import fraunces from '@fontsource/fraunces/files/fraunces-latin-600-normal.woff2?url';
+interface Props { lang: Lang; notFound?: boolean }
+const { lang, notFound = false } = Astro.props;
+const t = text(lang);
+const canonical = new URL(home(lang), site.siteUrl).href;
+const image = new URL(site.placeholders.images.social, site.siteUrl).href;
+---
+<!doctype html>
+<html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {lang === 'ar' ? <><link rel="preload" href={cairoBold} as="font" type="font/woff2" crossorigin/><link rel="preload" href={cairoRegular} as="font" type="font/woff2" crossorigin/></> : <link rel="preload" href={fraunces} as="font" type="font/woff2" crossorigin/>}
+    <title>{notFound ? t.notFoundTitle : t.title}</title>
+    <meta name="description" content={t.description}/>
+    {notFound ? <meta name="robots" content="noindex"/> : <>
+      <link rel="canonical" href={canonical}/>
+      <link rel="alternate" hreflang="ar" href={new URL('/', site.siteUrl).href}/>
+      <link rel="alternate" hreflang="en" href={new URL('/en/', site.siteUrl).href}/>
+      <link rel="alternate" hreflang="x-default" href={new URL('/', site.siteUrl).href}/>
+    </>}
+    <meta property="og:type" content="website"/><meta property="og:site_name" content={t.name}/>
+    <meta property="og:title" content={t.title}/><meta property="og:description" content={t.description}/>
+    <meta property="og:url" content={canonical}/><meta property="og:image" content={image}/>
+    <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content={t.ogAlt}/>
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_JO' : 'en_US'}/>
+    <meta property="og:locale:alternate" content={lang === 'ar' ? 'en_US' : 'ar_JO'}/>
+    <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={t.title}/>
+    <meta name="twitter:description" content={t.description}/><meta name="twitter:image" content={image}/>
+    <meta name="twitter:image:alt" content={t.ogAlt}/>
+    <meta name="theme-color" content="#FBF7F2"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"/>
+  </head>
+  <body><a class="skip-link" href="#main">{t.skip}</a><slot/></body>
+</html>

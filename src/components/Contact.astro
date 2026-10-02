@@ -1,0 +1,9 @@
+---
+import { text, whatsappUrl, type Lang } from '../i18n/utils';
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props; const t = text(lang);
+---
+<section id="contact" class="contact-section section"><div class="container split-layout"><div><p class="eyebrow">{t.contactKicker}</p><h2>{t.contactTitle}</h2><p class="contact-hours">{t.hours}</p><div class="contact-detail"><h3>{t.addressLabel}</h3><address><bdi>{t.address}</bdi><br/><bdi>{t.city}</bdi></address></div><div class="contact-detail"><h3>{t.phoneLabel}</h3><a class="phone-link" href={`tel:${site.phoneIntl}`}><bdi dir="ltr">{site.phoneDisplay}</bdi></a></div><div class="button-row"><a class="button" href={whatsappUrl(lang)}><Icon name="whatsapp"/>{t.whatsapp}</a>{site.facebook && <a class="social-text" href={site.facebook}><Icon name="facebook"/>{t.facebook}</a>}</div>{site.email && <a href={`mailto:${site.email}`}>{t.emailLabel}: <bdi>{site.email}</bdi></a>}</div>
+<div class="map-card">{site.mapsEmbedUrl ? <iframe src={site.mapsEmbedUrl} title={t.mapTitle} width="520" height="350" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen/> : <div class="map-fallback"><span class="map-pin"><Icon name="pin"/></span><h3>{t.mapFallback}</h3><p><bdi>{t.address}</bdi><br/><bdi>{t.city}</bdi></p></div>}<a class="button map-button" href={site.mapsLink}>{t.directions}<Icon name="arrow"/></a></div></div></section>
